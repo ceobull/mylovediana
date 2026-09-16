@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для Дианы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #12141d;
+            --accent-silver: #c5c6c7;
+            --silver-glow: rgba(197, 198, 199, 0.2);
+            --text-main: #e0e0e0;
+            --text-muted: #94a1b2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ЭКРАН С ПОДАРКОМ (БАНТИК) */
+        #gift-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1f2833 0%, #0b0c10 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .gift-box {
+            cursor: pointer;
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .box-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px var(--silver-glow));
+        }
+
+        .gift-box h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: var(--accent-silver);
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .gift-box p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .visible {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 20px;
+        }
+
+        header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #ffffff;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* ГАЛЕРЕЯ В РАМОЧКАХ */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .photo-card {
+            background: var(--card-bg);
+            padding: 15px 15px 25px 15px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(197, 198, 199, 0.1);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-silver);
+        }
+
+        /* Эффект бантика в углу рамочки */
+        .photo-card::before {
+            content: '🎀';
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .photo-frame {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: #1f2833;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: filter 0.4s ease, transform 0.4s ease;
+        }
+
+        .photo-card:hover .photo-frame img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        .photo-caption {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        /* СЕРТИФИКАТ НА СЕБЯ */
+        .certificate {
+            background: linear-gradient(135deg, #12141d 0%, #1f2833 100%);
+            border: 1px solid var(--accent-silver);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+        }
+
+        .certificate h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .certificate p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        .cert-signature {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--accent-silver);
+            font-size: 18px;
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЭКРАН-ПОДАРОК С БАНТИКОМ -->
+    <div id="gift-overlay" onclick="openGift()">
+        <div class="gift-box">
+            <div class="box-icon">🎁</div>
+            <h1>Диана</h1>
+            <p>Нажми на подарок, чтобы открыть</p>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ САЙТ -->
+    <div id="main-content">
+        <header>
+            <h2>Для Дианы</h2>
+            <p>Главный подарок уже в пути (и очень скучает)</p>
+        </header>
+
+        <!-- ГАЛЕРЕЯ ФОТОГРАФИЙ В РАМОЧКАХ -->
+        <div class="gallery">
+            <div class="photo-card">
+                <div class="photo-frame">
+                    <!-- Замени ссылку ниже на свою первую фотографию -->
+                    <img src="ТВОЯ_ССЫЛКА_НА_ФОТО_1" alt="Фото 1">
+                </div>
+                <div class="photo-caption">Самая прекрасная</div>
+            </div>
+
+            <div class="photo-card">
+                <div class="photo-frame">
+                    <!-- Замени ссылку ниже на свою вторую фотографию -->
+                    <img src="ТВОЯ_ССЫЛКА_НА_ФОТО_2" alt="Фото 2">
+                </div>
+                <div class="photo-caption">Тот самый вайб</div>
+            </div>
+        </div>
+
+        <!-- БЛОК-СЕРТИФИКАТ -->
+        <div class="certificate">
+            <h3>Сертификат</h3>
+            <p>Настоящий документ удостоверяет, что обладательница этого сайта получает самый главный подарок — абсолютное внимание, бесконечную заботу, тёплые разговоры на расстоянии и самую незабываемую встречу.</p>
+            <div class="cert-signature">Оскар</div>
+        </div>
+
+        <footer>
+            Сделано с теплом специально для тебя ✨
+        </footer>
+    </div>
+
+    <script>
+        function openGift() {
+            const overlay = document.getElementById('gift-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                mainContent.classList.add('visible');
+            }, 800);
+        }
+    </script>
+</body>
+</html>
