@@ -511,12 +511,10 @@
 </head>
 <body>
 
-    <!-- Летающие конверты-картинки на фоне -->
     <img src="envelope.png" class="flying-envelope-img" style="top: 10%; left: 8%;" onclick="openLetter('Письмо №1', 'Как же я рад, что ты есть у меня. Пусть даже мы далеко друг от друга, мое сердце всегда рядом с тобой! 🤍')" alt="Envelope">
     <img src="envelope.png" class="flying-envelope-img" style="top: 80%; left: 80%; animation-delay: 2s;" onclick="openLetter('Письмо №2', 'Ты — самое прекрасное, что случалось в нашей жизни. С твоим днем, кисенок! ✨')" alt="Envelope">
     <img src="envelope.png" class="flying-envelope-img" style="top: 15%; right: 8%; animation-delay: 4s;" onclick="openLetter('Письмо №3', 'Скоро мы обязательно увидимся, и это будет самая лучшая встреча! Жду не дождусь. 🌸')" alt="Envelope">
 
-    <!-- Заставка -->
     <div id="gift-overlay" onclick="openDashboard()">
         <div class="gift-card-intro">
             <div style="font-size: 35px; margin-bottom: 8px;">🎁</div>
@@ -525,7 +523,6 @@
         </div>
     </div>
 
-    <!-- Основной сайт -->
     <div id="main-dashboard">
         <div class="sidebar">
             <div class="logo-area">
@@ -546,7 +543,6 @@
                 <h2>С днем рождения, кисенок 🌸</h2>
             </div>
 
-            <!-- ВКЛАДКА 0: ГЛАВНАЯ -->
             <div id="tab-0" class="tab-content active-tab">
                 <div class="polaroid-grid">
                     <div class="polaroid-card" onclick="openLightbox('photo1.jpg', 'самая прекрасная ✨')">
@@ -581,14 +577,12 @@
                 </div>
             </div>
 
-            <!-- ВКЛАДКА 1: ПЛЕЙЛИСТ (Spotify Embed) -->
             <div id="tab-1" class="tab-content">
                 <div class="spotify-wrapper">
-                    <iframe src="https://open.spotify.com/embed/playlist/67wCFoimiefLGUwdILeX6I?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe src="https://open.spotify.com/playlist/67wCFoimiefLGUwdILeX6I?si=dfhyPhFKRk21RX-6aq3L0APÑ" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
 
-            <!-- ВКЛАДКА 2: СЕКРЕТЫ -->
             <div id="tab-2" class="tab-content">
                 <div class="cert-widget">
                     <h4>Секретные конвертики</h4>
@@ -599,7 +593,6 @@
         </div>
     </div>
 
-    <!-- Увеличенное фото с бантиками -->
     <div id="photo-lightbox" onclick="closeLightbox()">
         <div class="lightbox-card" onclick="event.stopPropagation()">
             <img src="bow.png" class="lightbox-bow" alt="Bow">
@@ -610,7 +603,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно письма -->
     <div id="letter-modal" onclick="closeLetter(event)">
         <div class="letter-content">
             <h3 id="modal-title">Письмо</h3>
