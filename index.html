@@ -11,7 +11,8 @@
             --glass-border: rgba(255, 255, 255, 0.15);
             --text-dark: #f3f4f6;
             --text-muted: #9ca3af;
-            --accent-pink: #f4b6c2;
+            --accent-blue: #a0c4ff;
+            --accent-glow: rgba(160, 196, 255, 0.3);
         }
 
         * {
@@ -21,7 +22,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #07080a 0%, #111827 50%, #1f1424 100%);
+            background: linear-gradient(135deg, #07080a 0%, #111827 50%, #141b2b 100%);
             background-attachment: fixed;
             color: var(--text-dark);
             font-family: 'Montserrat', sans-serif;
@@ -43,7 +44,7 @@
             cursor: pointer;
             animation: floatEnvelope 6s ease-in-out infinite;
             z-index: 10;
-            filter: drop-shadow(0 4px 12px rgba(244, 182, 194, 0.3));
+            filter: drop-shadow(0 4px 12px var(--accent-glow));
             transition: transform 0.3s;
         }
         .flying-envelope-img:hover {
@@ -170,10 +171,10 @@
         }
 
         .menu li.active {
-            background: var(--accent-pink);
-            color: #2b1f24;
+            background: var(--accent-blue);
+            color: #101522;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(244, 182, 194, 0.3);
+            box-shadow: 0 4px 15px var(--accent-glow);
         }
 
         .user-badge {
@@ -239,7 +240,6 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
 
-        /* Бантик-картинка в углу карточки */
         .polaroid-card .corner-bow {
             position: absolute;
             top: 5px;
@@ -299,56 +299,21 @@
         .signature {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            color: var(--accent-pink);
+            color: var(--accent-blue);
             font-size: 15px;
             font-weight: 600;
         }
 
-        /* Плейлист */
-        .playlist-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .song-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px 16px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* ПЛЕЙЛИСТ (Spotify Embed) */
+        .spotify-wrapper {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .song-info h5 {
-            font-size: 13px;
-            color: #fff;
-            margin-bottom: 2px;
-        }
-        .song-info span {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .spotify-link-box {
-            margin-top: 15px;
+            border-radius: 16px;
+            padding: 15px;
             text-align: center;
-            background: rgba(244, 182, 194, 0.08);
-            padding: 16px;
-            border-radius: 14px;
-            border: 1px solid rgba(244, 182, 194, 0.2);
-        }
-        .spotify-btn {
-            display: inline-block;
-            margin-top: 8px;
-            background: var(--accent-pink);
-            color: #2b1f24;
-            padding: 8px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 12px;
         }
 
-        /* Лайтбокс увеличенного фото с бантиками */
+        /* Лайтбокс увеличенного фото */
         #photo-lightbox {
             position: fixed;
             top: 0;
@@ -414,7 +379,7 @@
             to { transform: scale(1); }
         }
 
-        /* Летающие бантики-картинки вокруг фото */
+        /* Летающие бантики вокруг фото */
         .floating-bow-img {
             position: absolute;
             width: 30px;
@@ -474,8 +439,8 @@
         }
 
         .close-btn {
-            background: var(--accent-pink);
-            color: #2b1f24;
+            background: var(--accent-blue);
+            color: #101522;
             border: none;
             padding: 8px 18px;
             border-radius: 10px;
@@ -535,7 +500,7 @@
 <body>
 
     <img src="envelope.png" class="flying-envelope-img" style="top: 10%; left: 8%;" onclick="openLetter('Письмо №1', 'Как же я рад, что ты есть у меня. Пусть даже мы далеко друг от друга, мое сердце всегда рядом с тобой! 🤍')" alt="Envelope">
-    <img src="envelope.png" class="flying-envelope-img" style="top: 80%; left: 80%; animation-delay: 2s;" onclick="openLetter('Письмо №2', 'Ты — самое прекрасное, что случалось в моей жизни. С твоим днем, кисенок! ✨')" alt="Envelope">
+    <img src="envelope.png" class="flying-envelope-img" style="top: 80%; left: 80%; animation-delay: 2s;" onclick="openLetter('Письмо №2', 'Ты — самое прекрасное, что случалось в нашей жизни. С твоим днем, кисенок! ✨')" alt="Envelope">
     <img src="envelope.png" class="flying-envelope-img" style="top: 15%; right: 8%; animation-delay: 4s;" onclick="openLetter('Письмо №3', 'Скоро мы обязательно увидимся, и это будет самая лучшая встреча! Жду не дождусь. 🌸')" alt="Envelope">
 
     <div id="gift-overlay" onclick="openDashboard()">
@@ -601,33 +566,8 @@
             </div>
 
             <div id="tab-1" class="tab-content">
-                <div class="playlist-container">
-                    <div class="song-item">
-                        <div class="song-info">
-                            <h5>Твой любимый трек</h5>
-                            <span>Особенная песня для нас</span>
-                        </div>
-                        <span>▶ 03:21</span>
-                    </div>
-                    <div class="song-item">
-                        <div class="song-info">
-                            <h5>Вайб под луной</h5>
-                            <span>Ретро эстетика</span>
-                        </div>
-                        <span>▶ 02:45</span>
-                    </div>
-                    <div class="song-item">
-                        <div class="song-info">
-                            <h5>Скоро встретимся</h5>
-                            <span>На повторе</span>
-                        </div>
-                        <span>▶ 04:10</span>
-                    </div>
-                </div>
-
-                <div class="spotify-link-box">
-                    <p style="font-size: 12px; color: var(--text-muted);">Слушай наш полный плейлист в Spotify:</p>
-                    <a href="ССЫЛКА_НА_SPOTIFY" target="_blank" class="spotify-btn">Открыть в Spotify 🎧</a>
+                <div class="spotify-wrapper">
+                    <iframe style="border-radius:12px" src="Https://open.spotify.com/playlist/67wCFoimiefLGUwdILeX6I?si=yg9jBNd1TwmETMnSlTeJxQ&utm_source=copy-link&pi=TCQfv1PNTQWID" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </div>
 
