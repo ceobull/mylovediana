@@ -2,18 +2,16 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Для Дианы — Special Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для Дианы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #f9f4f5;
-            --card-bg: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --text-dark: #3a2e33;
+            --text-muted: #7a6b72;
             --accent-pink: #f4b6c2;
-            --accent-pink-hover: #eca1af;
-            --text-dark: #4a4044;
-            --text-muted: #8c7b82;
-            --shadow: 0 10px 30px rgba(244, 182, 194, 0.2);
         }
 
         * {
@@ -23,7 +21,8 @@
         }
 
         body {
-            background-color: var(--bg-main);
+            background: linear-gradient(135deg, #0d0f18 0%, #1a1528 50%, #29182c 100%);
+            background-attachment: fixed;
             color: var(--text-dark);
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
@@ -31,68 +30,94 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* ЭКРАН-ЗАСТАВКА (ПОДАРОК) */
+        /* Летающие конвертики на фоне */
+        .flying-envelope {
+            position: absolute;
+            font-size: 24px;
+            cursor: pointer;
+            animation: floatEnvelope 6s ease-in-out infinite;
+            z-index: 10;
+            filter: drop-shadow(0 4px 10px rgba(244, 182, 194, 0.4));
+            transition: transform 0.3s;
+        }
+        .flying-envelope:hover {
+            transform: scale(1.2);
+        }
+        @keyframes floatEnvelope {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Экран-заставка (подарок) */
         #gift-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(249, 244, 245, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 15, 24, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
         }
 
         .gift-card-intro {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 40px;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
+            border-radius: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             text-align: center;
             cursor: pointer;
-            border: 1px solid rgba(244, 182, 194, 0.4);
-            animation: bounce 2s infinite ease-in-out;
+            animation: pulseBox 2s infinite ease-in-out;
         }
 
         .gift-card-intro h1 {
-            font-size: 24px;
-            color: var(--text-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #ffffff;
             margin-bottom: 10px;
-            font-weight: 600;
+            font-weight: 400;
+            letter-spacing: 2px;
         }
 
         .gift-card-intro p {
-            color: var(--text-muted);
+            color: #d1d5db;
             font-size: 13px;
+            letter-spacing: 1px;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        @keyframes pulseBox {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
         }
 
-        /* ОСНОВНОЙ ДАШБОРД */
+        /* Основной дашборд */
         #main-dashboard {
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease;
-            width: 100%;
-            max-width: 850px;
-            background: var(--card-bg);
-            border-radius: 28px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(244, 182, 194, 0.3);
+            transition: opacity 1s ease;
+            width: 900px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 0 0 1px var(--glass-border);
             display: grid;
-            grid-template-columns: 240px 1fr;
+            grid-template-columns: 220px 1fr;
             overflow: hidden;
-            min-height: 550px;
+            position: relative;
+            z-index: 2;
         }
 
         .visible {
@@ -100,26 +125,21 @@
             visibility: visible !important;
         }
 
-        /* БОКОВАЯ ПАНЕЛЬ */
         .sidebar {
-            background: #fff5f7;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
             padding: 30px 20px;
-            border-right: 1px solid rgba(244, 182, 194, 0.2);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .logo-area h3 {
-            font-size: 16px;
-            letter-spacing: 1px;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
             color: var(--text-dark);
-            margin-bottom: 5px;
-        }
-
-        .logo-area span {
-            font-size: 11px;
-            color: var(--text-muted);
+            letter-spacing: 1px;
         }
 
         .menu {
@@ -128,209 +148,339 @@
         }
 
         .menu li {
-            padding: 10px 14px;
-            border-radius: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
             font-size: 13px;
             color: var(--text-dark);
             margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.6);
-            cursor: default;
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .menu li.active {
             background: var(--accent-pink);
             color: #fff;
             font-weight: 500;
+            box-shadow: 0 4px 15px rgba(244, 182, 194, 0.4);
         }
 
         .user-badge {
             font-size: 12px;
             color: var(--text-muted);
-            background: #fff;
-            padding: 10px;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 12px;
+            border-radius: 14px;
             text-align: center;
-            border: 1px solid rgba(244, 182, 194, 0.3);
         }
 
-        /* ОСНОВНОЙ КОНТЕНТ ДАШБОРДА */
         .dashboard-content {
-            padding: 30px;
+            padding: 35px;
             overflow-y: auto;
-            max-height: 600px;
+            max-height: 650px;
         }
 
         .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            text-align: center;
         }
 
         .dash-header h2 {
-            font-size: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--text-dark);
             font-weight: 600;
         }
 
-        .status-pill {
-            background: #fff0f3;
-            color: #d46a84;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        /* СЕТКА ВИДЖЕТОВ */
-        .widgets-grid {
+        /* Полароидные карточки (кликабельные) */
+        .polaroid-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        .widget-card {
-            background: #faf6f7;
-            border-radius: 16px;
-            padding: 15px;
-            border: 1px solid rgba(244, 182, 194, 0.2);
+        .polaroid-card {
+            background: #ffffff;
+            padding: 12px 12px 25px 12px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            cursor: pointer;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .widget-title {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .polaroid-card:nth-child(2) { transform: rotate(1.5deg); }
+        .polaroid-card:nth-child(3) { transform: rotate(-1deg); }
+
+        .polaroid-card:hover {
+            transform: translateY(-5px) rotate(0deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        .photo-preview {
+        .polaroid-card::before {
+            content: '🎀';
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 16px;
+            z-index: 5;
+        }
+
+        .polaroid-img {
             width: 100%;
             height: 180px;
-            border-radius: 12px;
+            border-radius: 6px;
             overflow: hidden;
-            background: #e8e1e3;
+            background: #f3f3f3;
         }
 
-        .photo-preview img {
+        .polaroid-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .widget-text {
+        .polaroid-caption {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
             font-size: 13px;
             color: var(--text-dark);
-            line-height: 1.5;
-            margin-top: 8px;
+            margin-top: 12px;
         }
 
-        /* ВИДЖЕТ СЕРТИФИКАТА (НА ВСЮ ШИРИНУ) */
+        /* Сертификат */
         .cert-widget {
-            background: linear-gradient(135deg, #fff5f7 0%, #ffe6ec 100%);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(244, 182, 194, 0.4);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
             text-align: center;
         }
 
         .cert-widget h4 {
-            font-size: 15px;
-            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            margin-bottom: 10px;
             color: var(--text-dark);
         }
 
         .cert-widget p {
             font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 12px;
-            line-height: 1.5;
+            margin-bottom: 15px;
+            line-height: 1.6;
         }
 
         .signature {
-            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             color: #d46a84;
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
-        @media (max-width: 768px) {
-            #main-dashboard {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: none;
-            }
-            .widgets-grid {
-                grid-template-columns: 1fr;
-            }
+        /* МОДАЛЬНОЕ ОКНО ДЛЯ УВЕЛИЧЕННОГО ФОТО С БАНТИКАМИ */
+        #photo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 15, 24, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .lightbox-card {
+            background: #fff;
+            padding: 15px 15px 30px 15px;
+            border-radius: 16px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            animation: zoomIn 0.3s forwards ease;
+            cursor: default;
+        }
+
+        .lightbox-img {
+            width: 100%;
+            height: 380px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .lightbox-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-top: 15px;
+        }
+
+        @keyframes zoomIn {
+            to { transform: scale(1); }
+        }
+
+        /* Летающие бантики вокруг увеличенного фото */
+        .floating-bow {
+            position: absolute;
+            font-size: 28px;
+            animation: flyBow 3s linear infinite;
+            pointer-events: none;
+            z-index: 3005;
+        }
+
+        @keyframes flyBow {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-50px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Модальное окно письма */
+        #letter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .letter-content {
+            background: #fff;
+            padding: 35px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .letter-content h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .letter-content p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .close-btn {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
-    <!-- ЗАСТАВКА С ПОДАРКОМ -->
+    <div class="flying-envelope" style="top: 10%; left: 15%;" onclick="openLetter('Письмо №1', 'Как же я рад, что ты есть у меня. Пусть даже мы далеко друг от друга, мое сердце всегда рядом с тобой в Питере! 🤍')">💌</div>
+    <div class="flying-envelope" style="top: 75%; left: 80%; animation-delay: 2s;" onclick="openLetter('Письмо №2', 'Ты — самое прекрасное, что случалось в моей жизни. С твоим днем, кисенок! ✨')">✉️</div>
+    <div class="flying-envelope" style="top: 20%; right: 10%; animation-delay: 4s;" onclick="openLetter('Письмо №3', 'Скоро мы обязательно увидимся, и это будет самая лучшая встреча! Жду не дождусь. 🌸')">💌</div>
+
     <div id="gift-overlay" onclick="openDashboard()">
         <div class="gift-card-intro">
             <div style="font-size: 40px; margin-bottom: 10px;">🎁</div>
             <h1>Для Дианы</h1>
-            <p>Нажми, чтобы открыть персональный дашборд</p>
+            <p>Нажми, чтобы открыть подарок</p>
         </div>
     </div>
 
-    <!-- ОСНОВНОЙ ДАШБОРД -->
     <div id="main-dashboard">
-        <!-- БОКОВОЕ МЕНЮ -->
         <div class="sidebar">
             <div class="logo-area">
-                <h3>AURORA UI</h3>
-                <span>special edition</span>
+                <h3>SPECIAL DAY</h3>
             </div>
             <ul class="menu">
                 <li class="active">✨ Главная</li>
-                <li>📸 Фото-модуль</li>
-                <li>💌 Сертификат</li>
+                <li>📸 Моменты</li>
+                <li>💌 Секреты</li>
             </ul>
             <div class="user-badge">
-                Статус: Скучаю 🤍
+                Скучаю 🤍
             </div>
         </div>
 
-        <!-- КОНТЕНТ -->
         <div class="dashboard-content">
             <div class="dash-header">
-                <h2>Привет, Диана 🌸</h2>
-                <div class="status-pill">Online из другого города</div>
+                <h2>С днем рождения, кисенок 🌸</h2>
             </div>
 
-            <div class="widgets-grid">
-                <!-- Карточка с фото 1 -->
-                <div class="widget-card">
-                    <div class="widget-title">Фото №1</div>
-                    <div class="photo-preview">
-                        <!-- Замени ссылку на свою фотку -->
-                        <img src="ТВОЯ_ССЫЛКА_НА_ФОТО_1" alt="Фото 1">
+            <div class="polaroid-grid">
+                <div class="polaroid-card" onclick="openLightbox('photo1.jpg', 'самая прекрасная ✨')">
+                    <div class="polaroid-img">
+                        <img src="photo1.jpg" alt="Фото 1">
                     </div>
-                    <div class="widget-text">Самая прекрасная ✨</div>
+                    <div class="polaroid-caption">самая прекрасная ✨</div>
                 </div>
 
-                <!-- Карточка с фото 2 -->
-                <div class="widget-card">
-                    <div class="widget-title">Фото №2</div>
-                    <div class="photo-preview">
-                        <!-- Замени ссылку на свою фотку -->
-                        <img src="ТВОЯ_ССЫЛКА_НА_ФОТО_2" alt="Фото 2">
+                <div class="polaroid-card" onclick="openLightbox('photo2.jpg', 'тот самый вайб 🤍')">
+                    <div class="polaroid-img">
+                        <img src="photo2.jpg" alt="Фото 2">
                     </div>
-                    <div class="widget-text">Тот самый вайб 🤍</div>
+                    <div class="polaroid-caption">тот самый вайб 🤍</div>
+                </div>
+
+                <div class="polaroid-card" onclick="openLightbox('photo3.jpg', 'моя любимая 🌸')">
+                    <div class="polaroid-img">
+                        <img src="photo3.jpg" alt="Фото 3">
+                    </div>
+                    <div class="polaroid-caption">моя любимая 🌸</div>
                 </div>
             </div>
 
-            <!-- Виджет сертификата -->
             <div class="cert-widget">
                 <h4>Лицензия на внимание и заботу</h4>
-                <p>Этот дашборд подтверждает: обладательница получает неограниченный доступ к теплу, улыбкам, разговорам на расстоянии и самой лучшей встрече.</p>
+                <p>Этот документ подтверждает: обладательница получает неограниченный доступ к теплу, улыбкам, разговорам на расстоянии и самой лучшей встрече.</p>
                 <div class="signature">С любовью, Оскар</div>
             </div>
+        </div>
+    </div>
+
+    <div id="photo-lightbox" onclick="closeLightbox()">
+        <div class="lightbox-card" onclick="event.stopPropagation()">
+            <div class="lightbox-img">
+                <img id="lightbox-img-tag" src="" alt="Zoom">
+            </div>
+            <div class="lightbox-caption" id="lightbox-caption-text"></div>
+        </div>
+    </div>
+
+    <div id="letter-modal" onclick="closeLetter(event)">
+        <div class="letter-content">
+            <h3 id="modal-title">Письмо</h3>
+            <p id="modal-text">Текст письма...</p>
+            <button class="close-btn" onclick="closeLetterBtn()">Закрыть</button>
         </div>
     </div>
 
@@ -338,12 +488,59 @@
         function openDashboard() {
             const overlay = document.getElementById('gift-overlay');
             const dashboard = document.getElementById('main-dashboard');
-            
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
                 dashboard.classList.add('visible');
-            }, 600);
+            }, 800);
+        }
+
+        // Открытие фото в полный экран с бантиками
+        function openLightbox(imgSrc, caption) {
+            document.getElementById('lightbox-img-tag').src = imgSrc;
+            document.getElementById('lightbox-caption-text').innerText = caption;
+            document.getElementById('photo-lightbox').style.display = 'flex';
+            
+            // Создаем летающие бантики
+            startFloatingBows();
+        }
+
+        function closeLightbox() {
+            document.getElementById('photo-lightbox').style.display = 'none';
+            // Убираем бантики
+            document.querySelectorAll('.floating-bow').forEach(b => b.remove());
+        }
+
+        function startFloatingBows() {
+            for (let i = 0; i < 8; i++) {
+                const bow = document.createElement('div');
+                bow.className = 'floating-bow';
+                bow.innerHTML = '🎀';
+                bow.style.left = Math.random() * 90 + '%';
+                bow.style.animationDuration = (2 + Math.random() * 2) + 's';
+                bow.style.fontSize = (20 + Math.random() * 20) + 'px';
+                document.body.appendChild(bow);
+
+                setTimeout(() => {
+                    bow.remove();
+                }, 4000);
+            }
+        }
+
+        function openLetter(title, text) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            document.getElementById('letter-modal').style.display = 'flex';
+        }
+
+        function closeLetterBtn() {
+            document.getElementById('letter-modal').style.display = 'none';
+        }
+
+        function closeLetter(e) {
+            if (e.target.id === 'letter-modal') {
+                document.getElementById('letter-modal').style.display = 'none';
+            }
         }
     </script>
 </body>
