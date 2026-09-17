@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --glass-bg: rgba(20, 22, 30, 0.8);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-dark: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent-blue: #a0c4ff;
-            --accent-glow: rgba(160, 196, 255, 0.3);
+            --glass-bg: rgba(25, 18, 22, 0.8);
+            --glass-border: rgba(255, 182, 193, 0.2);
+            --text-dark: #fdf2f4;
+            --text-muted: #d8b4bc;
+            --accent-pink: #ff8fa3;
+            --accent-glow: rgba(255, 143, 163, 0.4);
         }
 
         * {
@@ -22,7 +22,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #07080a 0%, #111827 50%, #141b2b 100%);
+            background: linear-gradient(135deg, #2b1620 0%, #3d1c2c 50%, #4a2034 100%);
             background-attachment: fixed;
             color: var(--text-dark);
             font-family: 'Montserrat', sans-serif;
@@ -55,55 +55,92 @@
             50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* Экран-заставка (подарок) */
+        /* Интерактивное интро (Письмо с вопросами) */
         #gift-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(7, 8, 10, 0.95);
+            background: rgba(30, 15, 22, 0.95);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            padding: 20px;
         }
 
-        .gift-card-intro {
-            background: rgba(255, 255, 255, 0.05);
+        .letter-card {
+            background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 182, 193, 0.25);
             padding: 35px 25px;
             border-radius: 28px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             text-align: center;
+            max-width: 380px;
+            width: 100%;
+            position: relative;
+        }
+
+        .letter-card .envelope-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin: 0 auto 15px auto;
             cursor: pointer;
             animation: pulseBox 2s infinite ease-in-out;
-            max-width: 90%;
         }
 
-        .gift-card-intro h1 {
+        .letter-card h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 26px;
+            font-size: 22px;
             color: #ffffff;
-            margin-bottom: 10px;
-            font-weight: 400;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.4;
         }
 
-        .gift-card-intro p {
-            color: var(--text-muted);
-            font-size: 13px;
-            letter-spacing: 1px;
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .answer-btn {
+            background: var(--accent-pink);
+            color: #2b1620;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .answer-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #no-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            position: relative;
+            transition: 0.15s ease-out;
         }
 
         @keyframes pulseBox {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.08); }
         }
 
         /* Основной сайт (Дашборд) */
@@ -132,10 +169,10 @@
 
         /* Боковое меню */
         .sidebar {
-            background: rgba(15, 17, 23, 0.6);
+            background: rgba(20, 10, 15, 0.6);
             backdrop-filter: blur(10px);
             padding: 25px 15px;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 182, 193, 0.1);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -171,8 +208,8 @@
         }
 
         .menu li.active {
-            background: var(--accent-blue);
-            color: #101522;
+            background: var(--accent-pink);
+            color: #2b1620;
             font-weight: 600;
             box-shadow: 0 4px 15px var(--accent-glow);
         }
@@ -184,7 +221,7 @@
             padding: 10px;
             border-radius: 12px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 182, 193, 0.1);
         }
 
         .dashboard-content {
@@ -242,10 +279,10 @@
 
         .polaroid-card .corner-bow {
             position: absolute;
-            top: 5px;
-            right: 6px;
-            width: 22px;
-            height: 22px;
+            top: 4px;
+            right: 5px;
+            width: 38px;  /* Увеличенный бантик */
+            height: 38px; /* Увеличенный бантик */
             z-index: 5;
             object-fit: contain;
         }
@@ -278,7 +315,7 @@
             backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 182, 193, 0.15);
             text-align: center;
         }
 
@@ -299,7 +336,7 @@
         .signature {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            color: var(--accent-blue);
+            color: var(--accent-pink);
             font-size: 15px;
             font-weight: 600;
         }
@@ -307,7 +344,7 @@
         /* ПЛЕЙЛИСТ (Spotify Embed) */
         .spotify-wrapper {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 182, 193, 0.1);
             border-radius: 16px;
             padding: 15px;
             text-align: center;
@@ -332,7 +369,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(7, 8, 10, 0.92);
+            background: rgba(30, 15, 22, 0.92);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             display: none;
@@ -360,8 +397,8 @@
             position: absolute;
             top: 6px;
             right: 8px;
-            width: 28px;
-            height: 28px;
+            width: 45px;  /* Увеличенный бантик */
+            height: 45px; /* Увеличенный бантик */
             z-index: 10;
             object-fit: contain;
         }
@@ -394,8 +431,8 @@
         /* Летающие бантики вокруг фото */
         .floating-bow-img {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 50px;  /* Увеличенные летающие бантики */
+            height: 50px; /* Увеличенные летающие бантики */
             object-fit: contain;
             animation: flyBow 3s linear infinite;
             pointer-events: none;
@@ -426,8 +463,8 @@
         }
 
         .letter-content {
-            background: #14161e;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #23121a;
+            border: 1px solid rgba(255, 182, 193, 0.2);
             padding: 25px;
             border-radius: 18px;
             max-width: 360px;
@@ -451,8 +488,8 @@
         }
 
         .close-btn {
-            background: var(--accent-blue);
-            color: #101522;
+            background: var(--accent-pink);
+            color: #2b1620;
             border: none;
             padding: 8px 18px;
             border-radius: 10px;
@@ -472,7 +509,7 @@
                 align-items: center;
                 padding: 12px 15px;
                 border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                border-bottom: 1px solid rgba(255, 182, 193, 0.1);
             }
             .logo-area h3 {
                 font-size: 14px;
@@ -516,12 +553,15 @@
     <img src="envelope.png" class="flying-envelope-img" style="top: 80%; left: 80%; animation-delay: 2s;" onclick="openLetter('Письмо №2', 'Ты — самое прекрасное, что случалось в нашей жизни. С твоим днем, кисенок! ✨')" alt="Envelope">
     <img src="envelope.png" class="flying-envelope-img" style="top: 15%; right: 8%; animation-delay: 4s;" onclick="openLetter('Письмо №3', 'Скоро мы обязательно увидимся, и это будет самая лучшая встреча! Жду не дождусь. 🌸')" alt="Envelope">
 
-    <!-- Заставка -->
-    <div id="gift-overlay" onclick="openDashboard()">
-        <div class="gift-card-intro">
-            <div style="font-size: 35px; margin-bottom: 8px;">🎁</div>
-            <h1>Для Дианы</h1>
-            <p>Нажми, чтобы открыть подарок</p>
+    <!-- Интерактивное интро (Письмо с вопросами) -->
+    <div id="gift-overlay">
+        <div class="letter-card" id="intro-card">
+            <img src="envelope.png" class="envelope-icon" alt="Envelope">
+            <h1 id="question-text">Нажми на меня 🤍<br><span style="font-size: 15px; font-family: 'Montserrat', sans-serif; color: var(--text-muted); font-weight: 300;">Любишь меня?</span></h1>
+            <div class="btn-group" id="btn-container">
+                <button class="answer-btn" onclick="nextQuestion()">Да</button>
+                <button class="answer-btn" id="no-btn" onmouseover="moveNoButton()" ontouchstart="moveNoButton()" onclick="moveNoButton()">Нет</button>
+            </div>
         </div>
     </div>
 
@@ -620,6 +660,28 @@
     </div>
 
     <script>
+        let step = 0;
+
+        function moveNoButton() {
+            const noBtn = document.getElementById('no-btn');
+            const x = (Math.random() - 0.5) * 180;
+            const y = (Math.random() - 0.5) * 100;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function nextQuestion() {
+            step++;
+            const questionText = document.getElementById('question-text');
+            const noBtn = document.getElementById('no-btn');
+            noBtn.style.transform = 'translate(0px, 0px)'; // возвращаем на место
+
+            if (step === 1) {
+                questionText.innerHTML = "Сильно любишь? 💕";
+            } else if (step === 2) {
+                openDashboard();
+            }
+        }
+
         function openDashboard() {
             const overlay = document.getElementById('gift-overlay');
             const dashboard = document.getElementById('main-dashboard');
